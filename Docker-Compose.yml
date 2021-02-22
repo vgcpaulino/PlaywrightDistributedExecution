@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+
+  chromium-server:
+    image: mcr.microsoft.com/playwright:bionic
+    container_name: chromium-server
+    ports:
+      - "8081:8081"
+    environment: 
+      - BROWSER_SERVER=chromium
+    volumes: 
+      - ./:/app
+    command: bash -c "cd app
+      && npm run start:server"
+  
+  firefox-server:
+    image: mcr.microsoft.com/playwright:bionic
+    container_name: firefox-server
+    ports:
+      - "8082:8081"
+    environment: 
+      - BROWSER_SERVER=firefox
+    volumes: 
+      - ./:/app
+    command: bash -c "cd app
+      && npm run start:server"
+
+  webkit-server:
+    image: mcr.microsoft.com/playwright:bionic
+    container_name: webkit-server
+    ports:
+      - "8083:8081"
+    environment: 
+      - BROWSER_SERVER=webkit
+    volumes: 
+      - ./:/app
+    command: bash -c "cd app
+      && npm run start:server"
+
+  test-runner:
+    image: mcr.microsoft.com/playwright:bionic
+    container_name: test-runner
+    volumes: 
+      - ./:/app
+    command: bash -c "cd app
+      && npm run test"
